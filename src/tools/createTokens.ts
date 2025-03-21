@@ -32,7 +32,7 @@ export async function createTokens(
       royalties: royalties ? Number(royalties) * 100 : 0,
       hash: "",
       attributes: new Uint8Array(),
-      uris: [],
+      uris: ["generatedByTheMultiversXMCP"],
     }
   );
 
