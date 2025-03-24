@@ -22,17 +22,29 @@ export async function createTokens(
   account.nonce = await entrypoint.recallAccountNonce(account.address);
 
   const controller = entrypoint.createTokenManagementController();
+
+  let quantity = initialQuantity ? BigInt(initialQuantity) : 1n;
+
+  //   in case the token is MetaESDT, we need to multiply the desired minted amount with the number of decimals
+  const api = entrypoint.createNetworkProvider();
+  const collection = await api.getDefinitionOfTokenCollection(tokenIdentifier);
+  if (collection.type === "MetaESDT") {
+    quantity = quantity * 10n ** BigInt(collection.decimals);
+  }
+
+  tokenIdentifier = collection.collection;
+
   let transaction = await controller.createTransactionForCreatingNft(
     account,
     account.getNonceThenIncrement(),
     {
-      tokenIdentifier: tokenIdentifier.toUpperCase(),
-      initialQuantity: initialQuantity ? BigInt(initialQuantity) : 1n,
+      tokenIdentifier: tokenIdentifier,
+      initialQuantity: quantity,
       name: name,
       royalties: royalties ? Number(royalties) * 100 : 0,
       hash: "",
       attributes: new Uint8Array(),
-      uris: ["generatedByTheMultiversXMCP"],
+      uris: [""],
     }
   );
 

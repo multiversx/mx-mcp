@@ -18,7 +18,7 @@ If not present, create a file called `claude_desktop_config.json` in `~/Library/
             ],
          "env": {
             "MVX_NETWORK": "devnet",
-            "MVX_WALLET": "someWallet.pem"
+            "MVX_WALLET": "absolute/path/to/someWallet.pem"
           }
         }
     }
@@ -40,7 +40,7 @@ Add the following to `~/.cursor.mcp.json`:
             ],
          "env": {
             "MVX_NETWORK": "devnet",
-            "MVX_WALLET": "someWallet.pem"
+            "MVX_WALLET": "absolute/path/to/someWallet.pem"
           }
         }
     }
