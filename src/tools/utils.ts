@@ -37,6 +37,16 @@ export const getApiUrl = (network: string): string => {
   return API_URLS[network as keyof typeof API_URLS];
 };
 
+export const loadNetworkFromEnv = (): string => {
+  const network = process.env.MVX_NETWORK;
+
+  if (!network) {
+    throw new Error("Network is not set in config file.");
+  }
+
+  return network;
+};
+
 export const loadPemWalletFromEnv = (): UserPem => {
   const walletPath = process.env.MVX_WALLET;
 

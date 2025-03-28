@@ -6,6 +6,7 @@ import {
   getExplorerUrl,
   isTokenNameValid,
   isTokenTickerValid,
+  loadNetworkFromEnv,
   loadPemWalletFromEnv,
 } from "./utils.js";
 
@@ -40,7 +41,7 @@ export async function issueFungible(
   const pem = loadPemWalletFromEnv();
   const account = new Account(pem.secretKey);
 
-  const network = process.env.MVX_NETWORK;
+  const network = loadNetworkFromEnv();
   const entrypoint = getEntrypoint(network);
 
   account.nonce = await entrypoint.recallAccountNonce(account.address);

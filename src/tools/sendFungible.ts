@@ -5,6 +5,7 @@ import {
   denominateValueWithDecimals,
   getEntrypoint,
   getExplorerUrl,
+  loadNetworkFromEnv,
   loadPemWalletFromEnv,
 } from "./utils.js";
 
@@ -19,7 +20,7 @@ export async function sendFungible(
   const account = new Account(pem.secretKey);
   const tokenObj = new Token({ identifier: token });
 
-  const network = process.env.MVX_NETWORK;
+  const network = loadNetworkFromEnv();
   const entrypoint = getEntrypoint(network);
   const api = entrypoint.createNetworkProvider();
 

@@ -2,7 +2,7 @@ import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { Address, ApiNetworkProvider } from "@multiversx/sdk-core";
 import { z } from "zod";
 import { USER_AGENT } from "./constants.js";
-import { getApiUrl } from "./utils.js";
+import { getApiUrl, loadNetworkFromEnv } from "./utils.js";
 
 export async function getTokens(
   address: string,
@@ -23,7 +23,7 @@ export async function getTokens(
     };
   }
 
-  const network = process.env.MVX_NETWORK;
+  const network = loadNetworkFromEnv();
   const api = new ApiNetworkProvider(getApiUrl(network), {
     clientName: USER_AGENT,
   });

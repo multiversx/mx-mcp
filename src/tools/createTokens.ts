@@ -4,19 +4,20 @@ import { z } from "zod";
 import {
   getEntrypoint,
   getExplorerUrl,
+  loadNetworkFromEnv,
   loadPemWalletFromEnv,
 } from "./utils.js";
 
 export async function createTokens(
   tokenIdentifier: string,
   name: string,
-  initialQuantity?: string,
+  initialQuantity: string,
   royalties?: string
 ): Promise<CallToolResult> {
   const pem = loadPemWalletFromEnv();
   const account = new Account(pem.secretKey);
 
-  const network = process.env.MVX_NETWORK;
+  const network = loadNetworkFromEnv();
   const entrypoint = getEntrypoint(network);
 
   account.nonce = await entrypoint.recallAccountNonce(account.address);
@@ -62,8 +63,8 @@ export async function createTokens(
 }
 
 export const createTokensToolName = "create-sft-nft-mesdt-tokens";
-export const createTokensToolDescription =
-  "Create a transaction to issue a semi-fungible token (SFT), or a non-fungible token (NFT), or a MetaESDT token for a collection and send it. Will issue the token with the specified arguments.";
+export const createTokensToolDescription = `Create a transaction to issue a semi-fungible token (SFT), or a non-fungible token (NFT), or a MetaESDT token for a collection and send it.
+Please also specify the initial quantity and the royalties.`;
 export const createTokensParamScheme = {
   tokenIdentifier: z.string().describe("The identifier of the collection."),
   name: z.string().describe("The name of the token."),

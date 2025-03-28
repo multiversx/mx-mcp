@@ -22,6 +22,11 @@ import {
   getBalanceToolName,
 } from "./tools/getBalance.js";
 import {
+  getNetwork,
+  getNetworkToolDescription,
+  getNetworkToolName,
+} from "./tools/getNetwork.js";
+import {
   getTokens,
   getTokensParamScheme,
   getTokensToolDescription,
@@ -165,5 +170,7 @@ server.tool(
   sendEgldToMultipleReceiversParamScheme,
   ({ amount, receivers }) => sendEgldToMultipleReceivers(amount, receivers)
 );
+
+server.tool(getNetworkToolName, getNetworkToolDescription, getNetwork);
 
 export { server };

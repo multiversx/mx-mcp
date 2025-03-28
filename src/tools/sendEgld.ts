@@ -5,6 +5,7 @@ import {
   denominateEgldValue,
   getEntrypoint,
   getExplorerUrl,
+  loadNetworkFromEnv,
   loadPemWalletFromEnv,
 } from "./utils.js";
 
@@ -17,7 +18,7 @@ export async function sendEgld(
   const receiverAddress = Address.newFromBech32(receiver);
   const account = new Account(pem.secretKey);
 
-  const network = process.env.MVX_NETWORK;
+  const network = loadNetworkFromEnv();
   const entrypoint = getEntrypoint(network);
 
   const accountOnNetwork = await entrypoint

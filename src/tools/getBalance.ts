@@ -3,7 +3,7 @@ import { Address, ApiNetworkProvider } from "@multiversx/sdk-core";
 import { BigNumber } from "bignumber.js";
 import { z } from "zod";
 import { USER_AGENT } from "./constants.js";
-import { getApiUrl } from "./utils.js";
+import { getApiUrl, loadNetworkFromEnv } from "./utils.js";
 
 export async function getBalance(address: string): Promise<CallToolResult> {
   let addressObj: Address;
@@ -21,7 +21,7 @@ export async function getBalance(address: string): Promise<CallToolResult> {
     };
   }
 
-  const network = process.env.MVX_NETWORK;
+  const network = loadNetworkFromEnv();
   const api = new ApiNetworkProvider(getApiUrl(network), {
     clientName: USER_AGENT,
   });

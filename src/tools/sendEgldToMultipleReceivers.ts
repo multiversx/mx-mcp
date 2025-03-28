@@ -1,10 +1,11 @@
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { Account, Address } from "@multiversx/sdk-core";
+import { Account, Address } from "@multiversx/sdk-core/out/index.js";
 import { z } from "zod";
 import { MIN_GAS_LIMIT } from "./constants.js";
 import {
   denominateEgldValue,
   getEntrypoint,
+  loadNetworkFromEnv,
   loadPemWalletFromEnv,
 } from "./utils.js";
 
@@ -17,7 +18,7 @@ export async function sendEgldToMultipleReceivers(
 
   const account = new Account(pem.secretKey);
 
-  const network = process.env.MVX_NETWORK;
+  const network = loadNetworkFromEnv();
   const entrypoint = getEntrypoint(network);
 
   const accountOnNetwork = await entrypoint
@@ -28,7 +29,7 @@ export async function sendEgldToMultipleReceivers(
     denominated * BigInt(receivers.length) +
     MIN_GAS_LIMIT * BigInt(receivers.length);
 
-  if (requiredBalance < accountOnNetwork.balance) {
+  if (requiredBalance > accountOnNetwork.balance) {
     throw new Error("Not enough EGLD balance");
   }
 
