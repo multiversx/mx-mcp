@@ -10,8 +10,8 @@ import {
 export async function createTokens(
   tokenIdentifier: string,
   name: string,
-  royalties?: string,
-  initialQuantity?: string
+  initialQuantity?: string,
+  royalties?: string
 ): Promise<CallToolResult> {
   const pem = loadPemWalletFromEnv();
   const account = new Account(pem.secretKey);
@@ -55,7 +55,7 @@ export async function createTokens(
     content: [
       {
         type: "text",
-        text: `The transaction has been sent. Check out the transaction here: ${explorer}/transactions/${hash}.`,
+        text: `Token created for collection ${tokenIdentifier} . Check out the transaction here: ${explorer}/transactions/${hash}.`,
       },
     ],
   };
@@ -66,12 +66,12 @@ export const createTokensToolDescription =
   "Create a transaction to issue a semi-fungible token (SFT), or a non-fungible token (NFT), or a MetaESDT token for a collection and send it. Will issue the token with the specified arguments.";
 export const createTokensParamScheme = {
   tokenIdentifier: z.string().describe("The identifier of the collection."),
+  name: z.string().describe("The name of the token."),
   initialQuantity: z
     .string()
     .optional()
     .describe(
-      "The initial quantity that will be minted. If not provided, defaults to 1."
+      "The initial quantity(number of tokens) that will be minted. If not provided, defaults to 1."
     ),
-  name: z.string().describe("The name of the token."),
   royalties: z.string().optional().describe("The royalties you'll receive."),
 };

@@ -4,6 +4,8 @@ import { z } from "zod";
 import {
   getEntrypoint,
   getExplorerUrl,
+  isTokenNameValid,
+  isTokenTickerValid,
   loadPemWalletFromEnv,
 } from "./utils.js";
 
@@ -13,6 +15,28 @@ export async function issueFungible(
   initialSupply: string,
   numDecimals: string
 ): Promise<CallToolResult> {
+  if (!isTokenNameValid(tokenName)) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Token name is invalid. Length should be between 3 and 20 characters and contain only alphanumeric characters.`,
+        },
+      ],
+    };
+  }
+
+  if (!isTokenTickerValid(tokenTicker)) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Token ticker is invalid. Length should be between 3 and 10 characters.`,
+        },
+      ],
+    };
+  }
+
   const pem = loadPemWalletFromEnv();
   const account = new Account(pem.secretKey);
 
@@ -40,12 +64,15 @@ export async function issueFungible(
   );
 
   const hash = await entrypoint.sendTransaction(transaction);
+  const outcome = await controller.awaitCompletedIssueFungible(hash);
+  const token = outcome[0].tokenIdentifier;
+
   const explorer = getExplorerUrl(network);
   return {
     content: [
       {
         type: "text",
-        text: `The transaction has been sent. Check out the transaction here: ${explorer}/transactions/${hash}`,
+        text: `The transaction has been sent. Check out the transaction here: ${explorer}/transactions/${hash}. The collection identifier is ${token}.`,
       },
     ],
   };

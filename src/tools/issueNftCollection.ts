@@ -4,6 +4,8 @@ import { z } from "zod";
 import {
   getEntrypoint,
   getExplorerUrl,
+  isTokenNameValid,
+  isTokenTickerValid,
   loadPemWalletFromEnv,
 } from "./utils.js";
 
@@ -11,6 +13,28 @@ export async function issueNftCollection(
   tokenName: string,
   tokenTicker: string
 ): Promise<CallToolResult> {
+  if (!isTokenNameValid(tokenName)) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Token name is invalid. Length should be between 3 and 20 characters and contain only alphanumeric characters.`,
+        },
+      ],
+    };
+  }
+
+  if (!isTokenTickerValid(tokenTicker)) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Token ticker is invalid. Length should be between 3 and 10 characters.`,
+        },
+      ],
+    };
+  }
+
   const pem = loadPemWalletFromEnv();
   const account = new Account(pem.secretKey);
 
@@ -67,7 +91,7 @@ export async function issueNftCollection(
     content: [
       {
         type: "text",
-        text: `The transaction has been sent. Check out the transaction here: ${explorer}/transactions/${issueCollectionHash}. A transaction to set roles has also been sent: ${explorer}/transactions/${setRolesHash}`,
+        text: `The transaction has been sent. Check out the transaction here: ${explorer}/transactions/${issueCollectionHash}. A transaction to set roles has also been sent: ${explorer}/transactions/${setRolesHash}. The collection identifier is ${token} and should be used for creating tokens.`,
       },
     ],
   };

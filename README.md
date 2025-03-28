@@ -29,7 +29,7 @@ If not present, create a file called `claude_desktop_config.json` in `~/Library/
 
 Clone the project locally, then build it using the same command, `npm run build`.
 
-Add the following to `~/.cursor.mcp.json`:
+Create a file in the root of the project called `.cursor.mcp.json`:
 ```json
 {
     "mcpServers": {

@@ -22,6 +22,12 @@ import {
   getBalanceToolName,
 } from "./tools/getBalance.js";
 import {
+  getTokens,
+  getTokensParamScheme,
+  getTokensToolDescription,
+  getTokensToolName,
+} from "./tools/getTokens.js";
+import {
   issueFungible,
   issueFungibleParamScheme,
   issueFungibleToolDescription,
@@ -51,6 +57,12 @@ import {
   sendEgldToolDescription,
   sendEgldToolName,
 } from "./tools/sendEgld.js";
+import {
+  sendEgldToMultipleReceivers,
+  sendEgldToMultipleReceiversParamScheme,
+  sendEgldToMultipleReceiversToolDescription,
+  sendEgldToMultipleReceiversToolName,
+} from "./tools/sendEgldToMultipleReceivers.js";
 import {
   sendFungible,
   sendFungibleParamScheme,
@@ -136,8 +148,22 @@ server.tool(
   createTokensToolName,
   createTokensToolDescription,
   createTokensParamScheme,
-  ({ tokenIdentifier, name, royalties, initialQuantity }) =>
-    createTokens(tokenIdentifier, name, royalties, initialQuantity)
+  ({ tokenIdentifier, name, initialQuantity, royalties }) =>
+    createTokens(tokenIdentifier, name, initialQuantity, royalties)
+);
+
+server.tool(
+  getTokensToolName,
+  getTokensToolDescription,
+  getTokensParamScheme,
+  ({ address, size }) => getTokens(address, size)
+);
+
+server.tool(
+  sendEgldToMultipleReceiversToolName,
+  sendEgldToMultipleReceiversToolDescription,
+  sendEgldToMultipleReceiversParamScheme,
+  ({ amount, receivers }) => sendEgldToMultipleReceivers(amount, receivers)
 );
 
 export { server };
