@@ -70,7 +70,6 @@ export const createTokensParamScheme = {
   name: z.string().describe("The name of the token."),
   initialQuantity: z
     .string()
-    .optional()
     .describe(
       "The initial quantity(number of tokens) that will be minted. If not provided, defaults to 1."
     ),
