@@ -42,7 +42,7 @@ export async function sendEgldToMultipleReceivers(
 
     const transaction = await controller.createTransactionForTransfer(
       account,
-      account.nonce,
+      account.getNonceThenIncrement(),
       {
         receiver: receiverAddress,
         nativeAmount: denominated,
