@@ -5,6 +5,10 @@ import { resolve } from "path";
 import { MULTIVERSX_DIR, MULTIVERSX_WALLET_NAME } from "./constants.js";
 
 export async function createWallet(): Promise<CallToolResult> {
+  if (!fs.existsSync(MULTIVERSX_DIR)) {
+    fs.mkdirSync(MULTIVERSX_DIR, { recursive: true });
+  }
+
   const walletPath = resolve(MULTIVERSX_DIR, MULTIVERSX_WALLET_NAME);
 
   if (fs.existsSync(walletPath)) {
@@ -23,13 +27,13 @@ export async function createWallet(): Promise<CallToolResult> {
   const pem = new UserPem(address.toBech32(), secretKey);
 
   pem.save(walletPath);
-  fs.chmodSync(walletPath, 0o666);
+  fs.chmodSync(walletPath, 0o444);
   return {
     content: [
       {
         type: "text",
         text: `A wallet has been created and saved as a PEM file at: ${walletPath}. PEM files ARE NOT SECURE.
-          If you want to further use the generated wallet, make sure to fund it first and set the absolute path in the "claude_desktop_config.json" under the "MVX_WALLET" environment variable.`,
+If you want to further use the generated wallet, make sure to fund it first and set the absolute path in the config file under the "MVX_WALLET" environment variable.`,
       },
     ],
   };
