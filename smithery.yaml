@@ -10,6 +10,7 @@ startCommand:
     properties:
       mvxNetwork:
         type: string
+        enum: ["devnet", "testnet", "mainnet"]
         default: devnet
         description: The MultiversX network to interact with, e.g., 'devnet', 'mainnet'.
   commandFunction:
