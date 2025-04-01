@@ -37,6 +37,16 @@ export const getApiUrl = (network: string): string => {
   return API_URLS[network as keyof typeof API_URLS];
 };
 
+export const loadNetworkFromEnv = (): string => {
+  const network = process.env.MVX_NETWORK;
+
+  if (!network) {
+    throw new Error("Network is not set in config file.");
+  }
+
+  return network;
+};
+
 export const loadPemWalletFromEnv = (): UserPem => {
   const walletPath = process.env.MVX_WALLET;
 
@@ -54,7 +64,7 @@ export const loadPemWalletFromEnv = (): UserPem => {
     );
   }
 
-  fs.chmodSync(walletPath, 0o644);
+  // fs.chmodSync(walletPath, 0o644);
   return UserPem.fromFile(walletPath);
 };
 
@@ -92,3 +102,26 @@ export const denominateValueWithDecimals = (
   const denominated = new BigNumber(value).times(factor).toFixed(0);
   return BigInt(denominated);
 };
+
+export const isTokenNameValid = (name: string): boolean => {
+  if (name.length < 3 || name.length > 20) {
+    return false;
+  }
+
+  if (!isAlphanumeric(name)) {
+    return false;
+  }
+
+  return true;
+};
+
+export const isTokenTickerValid = (ticker: string): boolean => {
+  if (ticker.length < 3 || ticker.length > 10) {
+    return false;
+  }
+  return true;
+};
+
+function isAlphanumeric(str: string): boolean {
+  return /^[a-zA-Z0-9]+$/.test(str);
+}
