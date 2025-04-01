@@ -14,10 +14,12 @@ const API_URLS = {
   mainnet: "https://api.multiversx.com",
 };
 
+const CLIENT_NAME = "mvx-mcp";
+
 const ENTRYPOINTS = {
-  devnet: new DevnetEntrypoint(),
-  testnet: new TestnetEntrypoint(),
-  mainnet: new MainnetEntrypoint(),
+  devnet: new DevnetEntrypoint(undefined, undefined, CLIENT_NAME),
+  testnet: new TestnetEntrypoint(undefined, undefined, CLIENT_NAME),
+  mainnet: new MainnetEntrypoint(undefined, undefined, CLIENT_NAME),
 };
 
 const EXPLORER_URLS = {
