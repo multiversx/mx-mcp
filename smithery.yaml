@@ -12,10 +12,18 @@ startCommand:
         type: string
         enum: ["devnet", "testnet", "mainnet"]
         default: devnet
-        description: The MultiversX network to interact with, e.g., 'devnet', 'mainnet'.
+        description: "The MultiversX network to interact with, e.g., 'devnet', 'mainnet'."
+      mvxWallet:
+        type: string
+        description: "The absolute path to a PEM wallet. Can be the newly created one at: ~/.multiversx/wallet.pem."
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-
-    (config) => ({ command: 'node', args: ['build/index.js'], env: { MVX_NETWORK: config.mvxNetwork } })
+    (config) => ({ command: 'node', args: ['build/index.js'],
+      env: {
+        MVX_NETWORK: config.mvxNetwork,
+        MVX_WALLET: config.mvxWallet
+      }})
   exampleConfig:
     mvxNetwork: devnet
+    mvxWallet: /Users/user/wallet.pem
