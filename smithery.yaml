@@ -15,7 +15,7 @@ startCommand:
         description: "The MultiversX network to interact with, e.g., 'devnet', 'mainnet'."
       mvxWallet:
         type: string
-        description: "The absolute path to a PEM wallet. Can be the newly created one at: ~/.multiversx/wallet.pem."
+        description: "The absolute path to a PEM wallet. Will be used for signing transactions."
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-
