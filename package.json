@@ -1,10 +1,13 @@
 {
   "name": "@multiversx/mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "build/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc"
+  },
+  "bin": {
+    "mx-mcp": "build/index.js"
   },
   "keywords": [],
   "author": "",
