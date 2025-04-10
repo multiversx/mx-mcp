@@ -20,7 +20,9 @@ Ensure you have [Claude Desktop](https://claude.ai/download) installed.
 Open or create the Claude configuration file:
 
 macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+
 Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
 Linux: `~/.config/Claude/claude_desktop_config.json`
 
 Add the mcp server to your configuration:
