@@ -4,32 +4,40 @@
 
 This is an MCP Server created to work with the MultiversX blockchain. It provides basic functionality like creating PEM wallets, getting the wallet address, getting the balance of the wallet and sending tokens (EGLD, Fungible, SFT, NFT, MetaESDT).
 
-### Installing via Smithery
+## Overview
 
-To install mx-mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@multiversx/mx-mcp):
-
-```bash
-npx -y @smithery/cli install @multiversx/mx-mcp --client claude
-```
+- Create a wallet. Creates a PEM wallet at: `~/.multiversx/wallet.pem`.
+- Get the current network set for the environment.
+- Get the wallet address set in the envirnment.
+- Fetch the balance of an address.
+- Send tokens.
+- Issue tokens.
 
 ## Adding to Claude Desktop via JSON
 
-Clone the repository, then build it using `npm run build`.
+Ensure you have [Claude Desktop](https://claude.ai/download) installed.
 
-If not present, create a file called `claude_desktop_config.json` in `~/Library/Application\ Support/Claude/` on MacOS.
+Open or create the Claude configuration file:
+
+macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+Linux: `~/.config/Claude/claude_desktop_config.json`
+
+Add the mcp server to your configuration:
 
 ```json
 {
     "mcpServers": {
         "multiversx-mcp": {
-            "command": "node",
+            "command": "npx",
             "args": [
-               "absolute/path/to/index.js"
+                "-y",
+                "@multiversx/mcp"
             ],
-         "env": {
-            "MVX_NETWORK": "devnet",
-            "MVX_WALLET": "absolute/path/to/someWallet.pem"
-          }
+            "env": {
+                "MVX_NETWORK": "devnet",
+                "MVX_WALLET": "absolute/path/to/someWallet.pem"
+            }
         }
     }
 }
@@ -37,9 +45,14 @@ If not present, create a file called `claude_desktop_config.json` in `~/Library/
 
 ## Adding to cursor
 
-Clone the project locally, then build it using the same command, `npm run build`.
+The same JSON configuration from above works for Cursor (version >= 0.47). Add the config in the `~/.cursor/mcp.json` config file. Or alternatively, go to Cursor Settings -> MCP section, then add a new MCP.
 
-Create a file in here: `~/.cursor/mcp.json`:
+### Build from source
+
+Clone the repository, then run `npm run build`.
+
+In the config file, set the server to the one you've just built.
+
 ```json
 {
     "mcpServers": {
@@ -56,7 +69,3 @@ Create a file in here: `~/.cursor/mcp.json`:
     }
 }
 ```
-
-### or alternatively
-
-Go to Cursor Settings -> MCP section, then add a new MCP. Give it a name, set type to `command` and in the command text box type `node absolute/path/to/index.js`.
