@@ -1,10 +1,10 @@
 {
   "name": "@multiversx/mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "build/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc && node scripts/addShebang.js"
   },
   "bin": {
     "mx-mcp": "build/index.js"
