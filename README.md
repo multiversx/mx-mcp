@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/multiversx-mx-mcp-badge.png)](https://mseep.ai/app/multiversx-mx-mcp)
+
 # MultiversX MCP Server
 
 [![smithery badge](https://smithery.ai/badge/@multiversx/mx-mcp)](https://smithery.ai/server/@multiversx/mx-mcp)
